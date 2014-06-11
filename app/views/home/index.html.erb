@@ -1,0 +1,13 @@
+<%= form_for :data, url: root_path,:method => 'get' do |f| %>
+
+<%= f.text_field :link%>
+    <%= f.select :type, [["h1"], ["h2"], ["h3"],["a"],["b"],["img"]] %>
+    <%#= f.select :skills_list, options_for_select(["h1", "h2", "h3","a","b"]), {}, {:multiple => true} %>
+<%= f.submit "submit"%>
+<%end%>
+
+<% unless @info.nil? %>
+    <% @info.each do |link|%>
+        <%= link.force_encoding('BINARY') unless link.nil?%><br/>
+    <%end%>
+<%end%>

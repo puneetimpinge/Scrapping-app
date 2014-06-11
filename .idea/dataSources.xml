@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1916516004">
+    <data-source source="LOCAL" name="Rails nokogiri_app: development" uuid="10654ae8-386c-4788-a833-99e6af51fb88">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:dev_noko</jdbc-url>
+      <user-name>puneet</user-name>
+      <user-password>dfdadfdfdfc4dfcfdfcfdfde</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails nokogiri_app: test" uuid="a0ddafad-e044-400c-a712-53882def6411">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:test_noko</jdbc-url>
+      <user-name>puneet</user-name>
+      <user-password>dfdadfdfdfc4dfcfdfcfdfde</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails nokogiri_app: production" uuid="a03ffe42-f71a-489c-a98a-ea6b38ac41c8">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:pro_noko</jdbc-url>
+      <user-name>puneet</user-name>
+      <user-password>dfdadfdfdfc4dfcfdfcfdfde</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
