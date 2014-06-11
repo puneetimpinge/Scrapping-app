@@ -1,13 +1,29 @@
+<div class="container well">
 <%= form_for :data, url: root_path,:method => 'get' do |f| %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Link</label>
+    <div class="col-sm-10" style="padding-bottom:20px">
+      <%= f.text_field :link, :class=>"form-control",:style => "width:260px",:placeholder=> "Enter Link"%>
+    </div>
 
-<%= f.text_field :link%>
-    <%= f.select :type, [["h1"], ["h2"], ["h3"],["a"],["b"],["img"]] %>
+    <label class="col-sm-2 control-label">Type</label>
+    <div class="col-sm-10">
+      <%= f.select :type, [["h1"], ["h2"], ["h3"],["a"],["b"],["img"]],:class=>"btn-group-vertical" %>
+    </div>
     <%#= f.select :skills_list, options_for_select(["h1", "h2", "h3","a","b"]), {}, {:multiple => true} %>
-<%= f.submit "submit"%>
+    <%= f.submit "Submit", :class=>"btn btn-primary"%>
+  </div>
 <%end%>
+</div>
 
+<div class="container">
 <% unless @info.nil? %>
-    <% @info.each do |link|%>
-        <%= link.force_encoding('BINARY') unless link.nil?%><br/>
-    <%end%>
+    <table class="table table-bordered table-striped">
+        <tr><th>Content</th></tr>
+        <% @info.each do |link|%>
+          <tr><td><%= link.force_encoding('BINARY') unless link.nil?%><br/></td><tr>
+        <%end%>
+
+    </table>
 <%end%>
+</div>
