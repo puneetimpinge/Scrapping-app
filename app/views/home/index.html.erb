@@ -1,4 +1,4 @@
-<div class="container well">
+<div class="container well" style="margin-top:20px">
 <%= form_for :data, url: root_path,:method => 'get' do |f| %>
   <div class="form-group">
     <label class="col-sm-2 control-label">Link</label>
@@ -7,7 +7,7 @@
     </div>
 
     <label class="col-sm-2 control-label">Type</label>
-    <div class="col-sm-10">
+    <div class="col-sm-10" style="padding-bottom:20px">
       <%= f.select :type, [["h1"], ["h2"], ["h3"],["a"],["b"],["img"]],:class=>"btn-group-vertical" %>
     </div>
     <%#= f.select :skills_list, options_for_select(["h1", "h2", "h3","a","b"]), {}, {:multiple => true} %>
