@@ -10,7 +10,7 @@
       <%= text_field_tag :columns,nil,  :class=>"form-control",:style => "width:260px",:placeholder=> "Enter number of columns", :id=>"rows_count"%>
     </div>
 
-    <label class="col-sm-2 control-label">Type</label>
+    <!--<label class="col-sm-2 control-label">Type</label>-->
 
     <%= button_tag "Start Building my Table", :class=>"btn btn-primary", :id =>"build_table"%>
   </div>
@@ -70,7 +70,7 @@
              $('.myapp').html(res)
            },
            error: function(){
-               alert('Sonething went wrong.')
+               alert('Something went wrong.')
            }
    })
 
