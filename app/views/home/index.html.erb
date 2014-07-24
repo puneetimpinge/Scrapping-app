@@ -68,6 +68,9 @@
            } ,
            success: function(res){
              $('.myapp').html(res)
+           },
+           error: function(){
+               alert('Sonething went wrong.')
            }
    })
 
