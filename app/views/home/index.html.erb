@@ -27,27 +27,34 @@
 
 <script type="text/javascript">
    $('#build_table').click(function(){
-       $("#mytable").html("")
-     $('#mytable').append("<div style='margin-top:20px' class='container well'><table class='table table-condensed'></table></div>")
-     var rows = parseInt($("#rows_count").val())
-       $('#mytable table').append(" <tr class='active'>"  +
-               "<td><input type='text' style='width:40px' placeholder='#' id='data_no' class='form-control' disabled></td>"+
-               "<td><input type='text' style='width:260px' placeholder='Column Name' id='data_column_name' class='form-control' disabled></td>"+
-               "<td><input type='text' style='width:260px' placeholder='input css selector' id='data_css' class='form-control' disabled></td>"+
-               "</tr> </br>") ;
-       for (var i= 0; i < rows ; i++) {
-           $('#mytable table').append(" <tr class='active' id='row'>"  +
-           "<td><input type='text' style='width:40px' id='data_no' class='form-control' placeholder='"+i+"' disabled></td>"+
-           "<td><input type='text' style='width:260px' placeholder='Column Name' id='name' class='form-control'></td>"+
-           "<td><input type='text' style='width:260px' placeholder='input css selector' name='selector' id='selector' class='form-control'></td>"+
-           "</tr> </br>");
-       }
-       $("#mytable div").append("<button id='gen_table' type='submit' class='btn btn-primary'>Generate Table</button>")
+     $("#mytable").html("")
+     if($("#link").val()=="" || $("#rows_count").val()==""){
+       alert("Enter both the field correct.")
+     }else {
+         $('#mytable').append("<div style='margin-top:20px' class='container well'><table class='table table-condensed'></table></div>")
+         var rows = parseInt($("#rows_count").val())
+         $('#mytable table').append(" <tr class='active'>" +
+                 "<td><input type='text' style='width:40px' placeholder='#' id='data_no' class='form-control' disabled></td>" +
+                 "<td><input type='text' style='width:260px' placeholder='Column Name' id='data_column_name' class='form-control' disabled></td>" +
+                 "<td><input type='text' style='width:260px' placeholder='input css selector' id='data_css' class='form-control' disabled></td>" +
+                 "</tr> </br>");
+         for (var i = 0; i < rows; i++) {
+             $('#mytable table').append(" <tr class='active' id='row'>" +
+                     "<td><input type='text' style='width:40px' id='data_no' class='form-control' placeholder='" + i + "' disabled></td>" +
+                     "<td><input type='text' style='width:260px' placeholder='Column Name' id='name' class='form-control'></td>" +
+                     "<td><input type='text' style='width:260px' placeholder='input css selector' name='selector' id='selector' class='form-control'></td>" +
+                     "</tr> </br>");
+         }
+         $("#mytable div").append("<button id='gen_table' type='submit' class='btn btn-primary'>Generate Table</button>")
+     }
    })
 
 
      $("#myform").submit(function(e){
          e.preventDefault();
+         var target = document.getElementById('foo');
+         var spinner = new Spinner().spin();
+         target.appendChild(spinner.el);
          var rows = parseInt($("#rows_count").val())
          var data =[]  ;
          $('#mytable tr#row').each(function(index, row){
@@ -62,17 +69,20 @@
        $.ajax({
            type: 'get',
            url: "/view_data",
+           async: false,
            data: {
                url : $("#link").val(),
                row_data: JSON.stringify(data)
            } ,
            success: function(res){
-             $('.myapp').html(res)
+//             $('.myapp').html(res)
+               window.location.href = "/show_result/result"
+               target.removeChild(spinner.el);
            },
            error: function(){
                alert('Something went wrong.')
+               target.removeChild(spinner.el);
            }
+       })
    })
-
-     })
 </script>
