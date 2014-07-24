@@ -55,6 +55,9 @@
          var target = document.getElementById('foo');
          var spinner = new Spinner().spin();
          target.appendChild(spinner.el);
+         var src = $(this)
+         src.css('cursor', 'wait')
+         $('body').css('cursor', 'wait')
          var rows = parseInt($("#rows_count").val())
          var data =[]  ;
          $('#mytable tr#row').each(function(index, row){
@@ -78,10 +81,14 @@
 //             $('.myapp').html(res)
                window.location.href = "/show_result/result"
                target.removeChild(spinner.el);
+               $('body').css('cursor', 'default')
+               src.css('cursor', 'default')
            },
            error: function(){
                alert('Something went wrong.')
                target.removeChild(spinner.el);
+               $('body').css('cursor', 'default')
+               src.css('cursor', 'default')
            }
        })
    })
