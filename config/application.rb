@@ -24,5 +24,6 @@ module NokogiriApp
     config.assets.precompile += %w( bootstrap.js )
     config.assets.precompile += %w( bootstrap-select.min.css )
     config.assets.precompile += %w( bootstrap-select.min.js )
+    config.assets.precompile += %w( spin.min.js )
   end
 end
