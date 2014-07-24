@@ -1,29 +1,75 @@
+<div class="myapp">
 <div class="container well" style="margin-top:20px">
-<%= form_for :data, url: root_path,:method => 'get' do |f| %>
   <div class="form-group">
     <label class="col-sm-2 control-label">Link</label>
     <div class="col-sm-10" style="padding-bottom:20px">
-      <%= f.text_field :link, :class=>"form-control",:style => "width:260px",:placeholder=> "Enter Link"%>
+      <%= text_field_tag :link, nil, :class=>"form-control",:style => "width:260px",:placeholder=> "Enter Link"%>
+    </div>
+    <label class="col-sm-2 control-label">Number of columns in your data table</label>
+    <div class="col-sm-10" style="padding-bottom:20px">
+      <%= text_field_tag :columns,nil,  :class=>"form-control",:style => "width:260px",:placeholder=> "Enter number of columns", :id=>"rows_count"%>
     </div>
 
     <label class="col-sm-2 control-label">Type</label>
-    <div class="col-sm-10" style="padding-bottom:20px">
-      <%= f.select :type, [["h1"], ["h2"], ["h3"],["a"],["b"],["img"]],:class=>"btn-group-vertical" %>
-    </div>
-    <%#= f.select :skills_list, options_for_select(["h1", "h2", "h3","a","b"]), {}, {:multiple => true} %>
-    <%= f.submit "Submit", :class=>"btn btn-primary"%>
+
+    <%= button_tag "Start Building my Table", :class=>"btn btn-primary", :id =>"build_table"%>
   </div>
-<%end%>
 </div>
 
-<div class="container">
-<% unless @info.nil? %>
-    <table class="table table-bordered table-striped">
-        <tr><th>Content</th></tr>
-        <% @info.each do |link|%>
-          <tr><td><%= link.force_encoding('BINARY') unless link.nil?%><br/></td><tr>
-        <%end%>
+<form id="myform">
+<div id="mytable">
 
-    </table>
-<%end%>
+ </div>
+</form>
 </div>
+
+
+
+<script type="text/javascript">
+   $('#build_table').click(function(){
+       $("#mytable").html("")
+     $('#mytable').append("<div style='margin-top:20px' class='container well'><table class='table table-condensed'></table></div>")
+     var rows = parseInt($("#rows_count").val())
+       $('#mytable table').append(" <tr class='active'>"  +
+               "<td><input type='text' style='width:40px' placeholder='#' id='data_no' class='form-control' disabled></td>"+
+               "<td><input type='text' style='width:260px' placeholder='Column Name' id='data_column_name' class='form-control' disabled></td>"+
+               "<td><input type='text' style='width:260px' placeholder='input css selector' id='data_css' class='form-control' disabled></td>"+
+               "</tr> </br>") ;
+       for (var i= 0; i < rows ; i++) {
+           $('#mytable table').append(" <tr class='active' id='row'>"  +
+           "<td><input type='text' style='width:40px' id='data_no' class='form-control' placeholder='"+i+"' disabled></td>"+
+           "<td><input type='text' style='width:260px' placeholder='Column Name' id='name' class='form-control'></td>"+
+           "<td><input type='text' style='width:260px' placeholder='input css selector' name='selector' id='selector' class='form-control'></td>"+
+           "</tr> </br>");
+       }
+       $("#mytable div").append("<button id='gen_table' type='submit' class='btn btn-primary'>Generate Table</button>")
+   })
+
+
+     $("#myform").submit(function(e){
+         e.preventDefault();
+         var rows = parseInt($("#rows_count").val())
+         var data =[]  ;
+         $('#mytable tr#row').each(function(index, row){
+             var row_hash = {};
+             row_hash['name'] = $(this).find('#name').val();
+             row_hash['selector'] = $(this).find('#selector').val();
+             data.push(row_hash)
+             console.log(row_hash);
+         });
+         console.log(data);
+
+       $.ajax({
+           type: 'get',
+           url: "/view_data",
+           data: {
+               url : $("#link").val(),
+               row_data: JSON.stringify(data)
+           } ,
+           success: function(res){
+             $('.myapp').html(res)
+           }
+   })
+
+     })
+</script>
