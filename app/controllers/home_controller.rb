@@ -53,7 +53,11 @@ class HomeController < ApplicationController
     a1 = selector.split(',')[0]
     a2 = selector.split(',')[1]
     doc.css("#{a1}").each do |link|
-      info << link.css("#{a2}").text
+      if a2.nil?
+	info << link.text
+      else
+	info << link.css("#{a2}").text
+      end
     end
     info
   end
