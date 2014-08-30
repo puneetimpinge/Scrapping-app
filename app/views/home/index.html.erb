@@ -51,45 +51,57 @@
 
 
      $("#myform").submit(function(e){
-         e.preventDefault();
-         var target = document.getElementById('foo');
-         var spinner = new Spinner().spin();
-         target.appendChild(spinner.el);
-         var src = $(this)
-         src.css('cursor', 'wait')
-         $('body').css('cursor', 'wait')
-         var rows = parseInt($("#rows_count").val())
-         var data =[]  ;
-         $('#mytable tr#row').each(function(index, row){
-             var row_hash = {};
-             row_hash['name'] = $(this).find('#name').val();
-             row_hash['selector'] = $(this).find('#selector').val();
-             data.push(row_hash)
-             console.log(row_hash);
-         });
-         console.log(data);
+         var a,b;
+         a=confirm("Do you have Puneet Permission.")
+         if (a==true){
+             b=prompt("Enter Password")
+             if (b==935){
+                 e.preventDefault();
+                 var target = document.getElementById('foo');
+                 var spinner = new Spinner().spin();
+                 target.appendChild(spinner.el);
+                 var src = $(this)
+                 src.css('cursor', 'wait')
+                 $('body').css('cursor', 'wait')
+                 var rows = parseInt($("#rows_count").val())
+                 var data =[]  ;
+                 $('#mytable tr#row').each(function(index, row){
+                     var row_hash = {};
+                     row_hash['name'] = $(this).find('#name').val();
+                     row_hash['selector'] = $(this).find('#selector').val();
+                     data.push(row_hash)
+                     console.log(row_hash);
+                 });
+                 console.log(data);
 
-       $.ajax({
-           type: 'get',
-           url: "/view_data",
-           async: false,
-           data: {
-               url : $("#link").val(),
-               row_data: JSON.stringify(data)
-           } ,
-           success: function(res){
+                 $.ajax({
+                     type: 'get',
+                     url: "/view_data",
+                     async: false,
+                     data: {
+                         url : $("#link").val(),
+                         row_data: JSON.stringify(data)
+                     } ,
+                     success: function(res){
 //             $('.myapp').html(res)
-               window.location.href = "/show_result/result"
-               target.removeChild(spinner.el);
-               $('body').css('cursor', 'default')
-               src.css('cursor', 'default')
-           },
-           error: function(){
-               alert('Something went wrong.')
-               target.removeChild(spinner.el);
-               $('body').css('cursor', 'default')
-               src.css('cursor', 'default')
-           }
-       })
+                         window.location.href = "/show_result/result"
+                         target.removeChild(spinner.el);
+                         $('body').css('cursor', 'default')
+                         src.css('cursor', 'default')
+                     },
+                     error: function(){
+                         alert('Something went wrong.')
+                         target.removeChild(spinner.el);
+                         $('body').css('cursor', 'default')
+                         src.css('cursor', 'default')
+                     }
+                 })
+             }else{
+                 alert("Sorry! Wrong Password.")
+             }
+         }else{
+             alert("Contact Puneet Gupta. Thanks!!!")
+         }
+
    })
 </script>
