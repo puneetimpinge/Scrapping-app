@@ -1,0 +1,25 @@
+require 'csv'
+require 'nokogiri'
+require 'open-uri'
+
+  info = [];
+  CSV.open("advertising_carbonmade.csv","a") do |record|
+	6000.times.each do |n|	
+		n = n+1530
+		sleep(5)
+		doc = Nokogiri::HTML(open("https://carbonmade.com/portfolios/graphic-design?page=#{n}"));
+		
+		doc.css("#left a").each_with_index do |obj|
+			puts "#{n} - #{obj.css(".name").text} - #{obj.attributes['href'].value}"
+			info << obj.css(".name").text.gsub(","," ")
+			#info << obj.css(".title").text.gsub(","," ")
+			info << obj.attributes['href'].value
+
+			unless obj.css(".name").text.empty?
+				record << info
+			end
+			info = []
+		end			
+	end
+  end
+
