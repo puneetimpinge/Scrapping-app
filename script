@@ -5,7 +5,7 @@ require 'open-uri'
   info = [];
   CSV.open("advertising_carbonmade.csv","a") do |record|
 	6000.times.each do |n|	
-		n = n+1280
+		n = n+1330
 		sleep(5)
 		doc = Nokogiri::HTML(open("https://carbonmade.com/portfolios/graphic-design?page=#{n}"));
 		
