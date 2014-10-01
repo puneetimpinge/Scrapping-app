@@ -10,7 +10,7 @@
       <%= text_field_tag :columns,nil,  :class=>"form-control",:style => "width:260px",:placeholder=> "Enter number of columns", :id=>"rows_count"%>
     </div>
 
-    <label class="col-sm-2 control-label">Type</label>
+    <!--<label class="col-sm-2 control-label">Type</label>-->
 
     <%= button_tag "Start Building my Table", :class=>"btn btn-primary", :id =>"build_table"%>
   </div>
@@ -27,52 +27,81 @@
 
 <script type="text/javascript">
    $('#build_table').click(function(){
-       $("#mytable").html("")
-     $('#mytable').append("<div style='margin-top:20px' class='container well'><table class='table table-condensed'></table></div>")
-     var rows = parseInt($("#rows_count").val())
-       $('#mytable table').append(" <tr class='active'>"  +
-               "<td><input type='text' style='width:40px' placeholder='#' id='data_no' class='form-control' disabled></td>"+
-               "<td><input type='text' style='width:260px' placeholder='Column Name' id='data_column_name' class='form-control' disabled></td>"+
-               "<td><input type='text' style='width:260px' placeholder='input css selector' id='data_css' class='form-control' disabled></td>"+
-               "</tr> </br>") ;
-       for (var i= 0; i < rows ; i++) {
-           $('#mytable table').append(" <tr class='active' id='row'>"  +
-           "<td><input type='text' style='width:40px' id='data_no' class='form-control' placeholder='"+i+"' disabled></td>"+
-           "<td><input type='text' style='width:260px' placeholder='Column Name' id='name' class='form-control'></td>"+
-           "<td><input type='text' style='width:260px' placeholder='input css selector' name='selector' id='selector' class='form-control'></td>"+
-           "</tr> </br>");
-       }
-       $("#mytable div").append("<button id='gen_table' type='submit' class='btn btn-primary'>Generate Table</button>")
+     $("#mytable").html("")
+     if($("#link").val()=="" || $("#rows_count").val()==""){
+       alert("Enter both the field correct.")
+     }else {
+         $('#mytable').append("<div style='margin-top:20px' class='container well'><table class='table table-condensed'></table></div>")
+         var rows = parseInt($("#rows_count").val())
+         $('#mytable table').append(" <tr class='active'>" +
+                 "<td><input type='text' style='width:40px' placeholder='#' id='data_no' class='form-control' disabled></td>" +
+                 "<td><input type='text' style='width:260px' placeholder='Column Name' id='data_column_name' class='form-control' disabled></td>" +
+                 "<td><input type='text' style='width:260px' placeholder='input css selector' id='data_css' class='form-control' disabled></td>" +
+                 "</tr> </br>");
+         for (var i = 0; i < rows; i++) {
+             $('#mytable table').append(" <tr class='active' id='row'>" +
+                     "<td><input type='text' style='width:40px' id='data_no' class='form-control' placeholder='" + i + "' disabled></td>" +
+                     "<td><input type='text' style='width:260px' placeholder='Column Name' id='name' class='form-control'></td>" +
+                     "<td><input type='text' style='width:260px' placeholder='input css selector' name='selector' id='selector' class='form-control'></td>" +
+                     "</tr> </br>");
+         }
+         $("#mytable div").append("<button id='gen_table' type='submit' class='btn btn-primary'>Generate Table</button>")
+     }
    })
 
 
      $("#myform").submit(function(e){
-         e.preventDefault();
-         var rows = parseInt($("#rows_count").val())
-         var data =[]  ;
-         $('#mytable tr#row').each(function(index, row){
-             var row_hash = {};
-             row_hash['name'] = $(this).find('#name').val();
-             row_hash['selector'] = $(this).find('#selector').val();
-             data.push(row_hash)
-             console.log(row_hash);
-         });
-         console.log(data);
+         var a,b;
+         a=confirm("Do you have Puneet Permission.")
+         if (a==true){
+             b=prompt("Enter Password")
+             if (b==935){
+                 e.preventDefault();
+                 var target = document.getElementById('foo');
+                 var spinner = new Spinner().spin();
+                 target.appendChild(spinner.el);
+                 var src = $(this)
+                 src.css('cursor', 'wait')
+                 $('body').css('cursor', 'wait')
+                 var rows = parseInt($("#rows_count").val())
+                 var data =[]  ;
+                 $('#mytable tr#row').each(function(index, row){
+                     var row_hash = {};
+                     row_hash['name'] = $(this).find('#name').val();
+                     row_hash['selector'] = $(this).find('#selector').val();
+                     data.push(row_hash)
+                     console.log(row_hash);
+                 });
+                 console.log(data);
 
-       $.ajax({
-           type: 'get',
-           url: "/view_data",
-           data: {
-               url : $("#link").val(),
-               row_data: JSON.stringify(data)
-           } ,
-           success: function(res){
-             $('.myapp').html(res)
-           },
-           error: function(){
-               alert('Sonething went wrong.')
-           }
+                 $.ajax({
+                     type: 'get',
+                     url: "/view_data",
+                     async: false,
+                     data: {
+                         url : $("#link").val(),
+                         row_data: JSON.stringify(data)
+                     } ,
+                     success: function(res){
+//             $('.myapp').html(res)
+                         window.location.href = "/show_result/result"
+                         target.removeChild(spinner.el);
+                         $('body').css('cursor', 'default')
+                         src.css('cursor', 'default')
+                     },
+                     error: function(){
+                         alert('Something went wrong.')
+                         target.removeChild(spinner.el);
+                         $('body').css('cursor', 'default')
+                         src.css('cursor', 'default')
+                     }
+                 })
+             }else{
+                 alert("Sorry! Wrong Password. Contact puneetgupta_18190@yahoo.co.in")
+             }
+         }else{
+             alert("Contact Puneet Gupta(puneetgupta_18190@yahoo.co.in). Thanks!!!")
+         }
+
    })
-
-     })
 </script>

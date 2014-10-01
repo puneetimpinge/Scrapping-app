@@ -40,3 +40,4 @@ gem 'spring',        group: :development
 
 gem 'nokogiri'
 gem 'rails_12factor'
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'

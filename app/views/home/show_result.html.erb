@@ -1,5 +1,5 @@
 <div class="container" style="margin-left:530px;padding:20px">
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Result</button>
+  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Result</button>
 </div>
 <div class="container well">
   <table class="table table-hover">
@@ -14,11 +14,11 @@
     <% count = @selected_data.count %>
     <% records = @selected_data[0].count %>
     <% (0...records).each do |i| %>
-    <tr>
-      <% (0...count).each do |j|%>
-          <td><%=@selected_data[j][i] unless @selected_data[j][i].empty? %></td>
-      <% end %>
-    </tr>
+        <tr>
+          <% (0...count).each do |j|%>
+              <td><%=@selected_data[j][i] unless @selected_data[j][i].empty? %></td>
+          <% end %>
+        </tr>
     <%end%>
     </tbody>
   </table>
@@ -42,14 +42,34 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Download</button>
+        <button type="button" class="btn btn-primary" id="download">Download</button>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
-   $(function(){
-       $('.selectpicker').selectpicker();
-   })
+    $(function(){
+        $('.selectpicker').selectpicker();
+    })
+    $("#download").click(function(){
+        var file_name = $("#name").val();
+        var url = ""
+        if($('button.selectpicker').attr('title') == "CSV"){
+            url = "/show_result/"+file_name+".csv"
+        }else if($('button.selectpicker').attr('title') == "Excel"){
+            url = "/show_result/"+file_name+".xls"
+        }
+            window.location.href = url;
+//            $.ajax({
+//                type: "get",
+//                url: url,
+//                success: function(res){
+//
+//                },
+//                error: function(){
+//                    alert('Something went wrong.')
+//                }
+//            })
+    })
 </script>
